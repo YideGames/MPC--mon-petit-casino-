@@ -1,0 +1,231 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; 
+}
+
+body {
+    background-color: #0d0d0f; /* Fond très sombre */
+    color: #ffffff; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 450px; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #FFB703; /* Teinte chaude et dorée */
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+#btn-code {
+    background: transparent;
+    color: #666;
+    border: 1px solid #333;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#btn-code:active {
+    background: #333;
+    color: #fff;
+}
+
+/* Effet 3D lisse pour le solde */
+#solde-container {
+    background: linear-gradient(145deg, #1f1f23, #161619);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+    cursor: pointer;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5), 
+               -5px -5px 15px rgba(40,40,45,0.2); 
+    border: 1px solid rgba(255, 183, 3, 0.1);
+    transition: transform 0.1s;
+}
+
+#solde-container:active {
+    transform: scale(0.97);
+}
+
+.currency {
+    color: #FFB703;
+    font-size: 28px;
+}
+
+.menu-jeux {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-jeu {
+    background: linear-gradient(145deg, #252529, #1c1c1f);
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+}
+
+.btn-jeu:active {
+    background: #FFB703;
+    color: #000;
+    transform: scale(0.97);
+}
+
+/* Le panneau d'ajout d'argent */
+#admin-panel {
+    margin-top: auto; 
+    margin-bottom: 20px;
+    background: #1a1a1d;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #FFB703;
+    text-align: center;
+}
+
+#admin-panel h2 {
+    color: #FFB703;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+#admin-panel input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #0d0d0f;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+#admin-panel button {
+    background: #FFB703;
+    color: #000;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* L'INTERFACE POPUP POUR LE CODE */
+#modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.85); /* Effet d'assombrissement en fond */
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #1e1e24;
+    width: 85%;
+    max-width: 350px;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+}
+
+.modal-content h3 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #121215;
+    color: #FFB703;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 3px;
+    outline: none;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-annuler {
+    background: #333;
+    color: #fff;
+}
+
+.btn-valider {
+    background: #FFB703;
+    color: #000;
+}

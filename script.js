@@ -93,7 +93,7 @@ function fermerModalCode() {
 
 function validerCode() {
     let codeTape = document.getElementById('input-code').value;
-    if (codeTape === "BOSS") { 
+    if (codeTape === "boss") { 
         estAdmin = true;
         localStorage.setItem('mpc_admin', 'true');
         fermerModalCode();

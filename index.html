@@ -11,28 +11,187 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- En-tête -->
-        <header>
+        <!-- En-tête (Fixe et visible partout) -->
+        <header id="en-tete-principal">
             <div class="top-bar">
                 <h1>MPC</h1>
-                <!-- Le fameux bouton Code en haut -->
                 <button id="btn-code" onclick="ouvrirModalCode()">CODE</button>
             </div>
             
-            <!-- Le clic sur le solde lance maintenant le mini-jeu -->
             <div id="solde-container" onclick="lancerMiniJeu()">
                 <span id="solde-text">0</span> <span class="currency">€</span>
             </div>
         </header>
 
         <!-- Menu des jeux -->
-        <main class="menu-jeux">
-            <button class="btn-jeu">♠️ Poker</button>
-            <button class="btn-jeu">♣️ Blackjack</button>
-            <button class="btn-jeu">🎰 Roulette</button>
+        <main class="menu-jeux" id="menu-principal">
+            <button class="btn-jeu" onclick="ouvrirPoker()">♠️ Poker</button>
+            <button class="btn-jeu" onclick="ouvrirBlackjack()">♣️ Blackjack</button>
+            <button class="btn-jeu" onclick="ouvrirRoulette()">🔴 Roulette</button>
         </main>
 
-        <!-- Panneau Admin (Trésorerie) caché par défaut -->
+        <!-- JEU : POKER -->
+        <main id="poker-view" style="display: none;">
+            <div class="poker-header">
+                <button class="btn-retour" onclick="fermerPoker()">⬅ Retour</button>
+                <div class="pot-container">
+                    <span class="pot-label">POT</span>
+                    <span id="poker-pot">0 €</span>
+                </div>
+            </div>
+            
+            <div class="poker-table-container">
+                <div class="poker-table">
+                    <div class="player opponent">
+                        <div class="avatar-box">
+                            <span class="avatar-icon">🤖</span>
+                            <span class="avatar-name">ProBot</span>
+                            <span class="avatar-chips">10 000 €</span>
+                        </div>
+                        <div class="cards-hand" id="bot-cards"></div>
+                    </div>
+                    
+                    <div class="community-cards" id="board-cards">
+                        <div class="card placeholder"></div>
+                        <div class="card placeholder"></div>
+                        <div class="card placeholder"></div>
+                        <div class="card placeholder"></div>
+                        <div class="card placeholder"></div>
+                    </div>
+                    
+                    <div class="player hero">
+                        <div class="cards-hand" id="hero-cards"></div>
+                        <div class="avatar-box hero-box">
+                            <span class="avatar-icon">😎</span>
+                            <span class="avatar-name">Tom</span>
+                            <span class="avatar-chips" id="hero-poker-chips">0 €</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="poker-controls">
+                <button class="btn-poker fold" onclick="pokerAction('fold')">Passer</button>
+                <button class="btn-poker call" onclick="pokerAction('call')">Suivre</button>
+                <button class="btn-poker raise" onclick="pokerAction('raise')">Relancer</button>
+            </div>
+        </main>
+
+        <!-- JEU : BLACKJACK (Premium Glassmorphism & Fixe) -->
+        <main id="bj-view" style="display: none; position: relative;">
+            <button class="btn-retour-clean" onclick="fermerBlackjack()" style="margin-bottom: 15px;">⬅ Retour</button>
+            
+            <!-- Table de Blackjack -->
+            <div class="bj-table-glass">
+                <!-- Sabot (Deck visuel pour l'animation) -->
+                <div id="bj-shoe"></div>
+
+                <!-- Croupier -->
+                <div class="bj-area">
+                    <div class="cards-container" id="dealer-cards"></div>
+                    <!-- Bulle de score qui garde sa place même invisible -->
+                    <div class="bj-score-pill" id="dealer-score-box"><span id="dealer-score">0</span></div>
+                </div>
+
+                <div class="bj-divider"></div>
+
+                <!-- Joueur -->
+                <div class="bj-area">
+                    <div class="bj-score-pill player-score" id="player-score-box"><span id="player-score">0</span></div>
+                    <div class="cards-container" id="player-cards"></div>
+                    
+                    <!-- Zones de Mise -->
+                    <div class="bj-bet-zones">
+                        <!-- Lucky Ladies -->
+                        <div class="bj-bet-spot-side" id="bj-ll-spot" onclick="placerMiseBj('ll')">
+                            <span>L. LADIES</span>
+                            <div class="chip-stack" id="bj-ll-chips"></div>
+                        </div>
+                        
+                        <!-- Mise Principale -->
+                        <div class="bj-bet-spot-clean" id="bj-main-spot" onclick="placerMiseBj('main')">
+                            <span>MISE</span>
+                            <div class="chip-stack" id="bj-main-chips"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interface d'Assurance -->
+                <div id="bj-insurance-overlay" style="display: none;">
+                    <h4>Assurance ?</h4>
+                    <p id="bj-insurance-cost">Coût: 0€ (Paie 2:1)</p>
+                    <div class="insurance-actions">
+                        <button class="btn-glass-action stand" onclick="repondreAssurance(false)">Non</button>
+                        <button class="btn-glass-action hit" onclick="repondreAssurance(true)">Oui</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vrai Bouton Retirer fixe -->
+            <div style="display:flex; justify-content:center; margin-top:15px; min-height: 35px;">
+                <button class="btn-glass-action stand" id="btn-clear-bets" onclick="retirerMisesBj()" style="visibility: hidden; width: auto; padding: 8px 20px; font-size: 14px;">Retirer les mises</button>
+            </div>
+
+            <!-- Conteneur fixe pour les contrôles pour éviter les sauts -->
+            <div class="bj-controls-wrapper">
+                <div id="bj-bet-controls" class="bj-controls-glass">
+                    <div class="chip-selector-clean" id="bj-chip-selector">
+                        <div class="chip-clean active" id="bj-chip-10" onclick="choisirJetonBj(10)">10</div>
+                        <div class="chip-clean" id="bj-chip-50" onclick="choisirJetonBj(50)">50</div>
+                        <div class="chip-clean" id="bj-chip-100" onclick="choisirJetonBj(100)">100</div>
+                        <div class="chip-clean" id="bj-chip-500" onclick="choisirJetonBj(500)">500</div>
+                    </div>
+                    <button class="btn-glass-main" id="btn-deal" onclick="distribuerBj()" disabled>Distribuer</button>
+                </div>
+
+                <div id="bj-play-controls" class="bj-controls-glass" style="display: none;">
+                    <button class="btn-glass-action hit" onclick="tirerCarteBj()">Tirer</button>
+                    <button class="btn-glass-action stand" onclick="resterBj()">Rester</button>
+                    <button class="btn-glass-action double" id="btn-double" onclick="doublerBj()">x2</button>
+                </div>
+            </div>
+
+            <!-- Message de résultat centré -->
+            <div id="bj-message-overlay" style="display: none;">
+                <div class="bj-message-glass">
+                    <h3 id="bj-message-text">Gagné !</h3>
+                    <button class="btn-glass-main" onclick="reinitialiserBj()">Continuer</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- JEU : ROULETTE PRO -->
+        <main id="roulette-view" style="display: none;">
+            <div class="roulette-header">
+                <button class="btn-retour" onclick="fermerRoulette()">⬅ Retour</button>
+                <div id="roulette-resultat-pro">Faites vos jeux !</div>
+            </div>
+
+            <div class="chip-selector">
+                <div class="chip active" id="chip-10" onclick="choisirJeton(10)">10</div>
+                <div class="chip" id="chip-50" onclick="choisirJeton(50)">50</div>
+                <div class="chip" id="chip-100" onclick="choisirJeton(100)">100</div>
+                <div class="chip" id="chip-500" onclick="choisirJeton(500)">500</div>
+                <button class="btn-clear" onclick="annulerParis()">Annuler</button>
+            </div>
+
+            <div class="roulette-board">
+                <div class="bet-spot green zero" onclick="placerPari('0')">0<span class="chip-bet" id="bet-0"></span></div>
+                <div class="board-numbers" id="board-numbers"></div>
+                <div class="board-outside">
+                    <div class="bet-spot" onclick="placerPari('1-18')">1-18<span class="chip-bet" id="bet-1-18"></span></div>
+                    <div class="bet-spot" onclick="placerPari('pair')">Pair<span class="chip-bet" id="bet-pair"></span></div>
+                    <div class="bet-spot red" onclick="placerPari('rouge')">Rouge<span class="chip-bet" id="bet-rouge"></span></div>
+                    <div class="bet-spot black" onclick="placerPari('noir')">Noir<span class="chip-bet" id="bet-noir"></span></div>
+                    <div class="bet-spot" onclick="placerPari('impair')">Impair<span class="chip-bet" id="bet-impair"></span></div>
+                    <div class="bet-spot" onclick="placerPari('19-36')">19-36<span class="chip-bet" id="bet-19-36"></span></div>
+                </div>
+            </div>
+
+            <button class="btn-spin" id="btn-lancer-roulette" onclick="lancerRoulettePro()">TOURNER LA ROUE</button>
+        </main>
+
+        <!-- Panneau Admin -->
         <div id="admin-panel" style="display: none;">
             <h2>Trésorerie VIP</h2>
             <div class="input-group">
@@ -42,7 +201,7 @@
         </div>
     </div>
 
-    <!-- Vraie interface (Modal) pour le code secret -->
+    <!-- Interface Code Secret -->
     <div id="modal-overlay" style="display: none;">
         <div class="modal-content">
             <h3>Accès Restreint</h3>
@@ -55,12 +214,23 @@
         </div>
     </div>
 
+    <!-- MINI-JEU : MACHINE À SOUS -->
+    <div id="minijeu-overlay" style="display: none;">
+        <div class="modal-content minijeu-content">
+            <h3>🎰 Machine à sous</h3>
+            <div class="slots-container">
+                <div class="slot" id="slot1">❓</div>
+                <div class="slot" id="slot2">❓</div>
+                <div class="slot" id="slot3">❓</div>
+            </div>
+            <p id="minijeu-message">Tente ta chance pour gagner plus !</p>
+            <div class="modal-actions">
+                <button class="btn-annuler" onclick="fermerMiniJeu()">Fermer</button>
+                <button class="btn-valider" onclick="jouerMiniJeu()">Tourner !</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-            .then(() => console.log("Service Worker enregistré avec succès !"));
-        }
-    </script>
 </body>
 </html>

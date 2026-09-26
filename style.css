@@ -2,23 +2,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none; 
+    user-select: none;
 }
 
 body {
-    background-color: #0d0d0f; /* Fond très sombre */
-    color: #ffffff; 
+    background-color: #0d0d0f;
+    color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     width: 100vw;
     height: 100vh;
-    overflow: hidden; 
+    overflow: hidden;
     display: flex;
     justify-content: center;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px; 
+    max-width: 450px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -29,8 +29,7 @@ body {
 header {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
-    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .top-bar {
@@ -41,7 +40,7 @@ header {
 }
 
 h1 {
-    color: #FFB703; /* Teinte chaude et dorée */
+    color: #FFB703;
     font-size: 32px;
     font-weight: 800;
     letter-spacing: 1px;
@@ -64,7 +63,6 @@ h1 {
     color: #fff;
 }
 
-/* Effet 3D lisse pour le solde */
 #solde-container {
     background: linear-gradient(145deg, #1f1f23, #161619);
     padding: 20px;
@@ -73,20 +71,13 @@ h1 {
     font-weight: bold;
     font-size: 36px;
     cursor: pointer;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5), 
-               -5px -5px 15px rgba(40,40,45,0.2); 
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5), -5px -5px 15px rgba(40,40,45,0.2);
     border: 1px solid rgba(255, 183, 3, 0.1);
     transition: transform 0.1s;
 }
 
-#solde-container:active {
-    transform: scale(0.97);
-}
-
-.currency {
-    color: #FFB703;
-    font-size: 28px;
-}
+#solde-container:active { transform: scale(0.97); }
+.currency { color: #FFB703; font-size: 28px; }
 
 .menu-jeux {
     display: flex;
@@ -114,9 +105,9 @@ h1 {
     transform: scale(0.97);
 }
 
-/* Le panneau d'ajout d'argent */
+/* Modals & Admin */
 #admin-panel {
-    margin-top: auto; 
+    margin-top: auto;
     margin-bottom: 20px;
     background: #1a1a1d;
     padding: 20px;
@@ -125,43 +116,15 @@ h1 {
     text-align: center;
 }
 
-#admin-panel h2 {
-    color: #FFB703;
-    font-size: 16px;
-    margin-bottom: 15px;
-}
+#admin-panel h2 { color: #FFB703; font-size: 16px; margin-bottom: 15px; }
+.input-group { display: flex; gap: 10px; }
+#admin-panel input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: #0d0d0f; color: white; font-size: 16px; text-align: center; }
+#admin-panel button { background: #FFB703; color: #000; border: none; padding: 12px 15px; border-radius: 8px; font-weight: bold; font-size: 14px; }
 
-.input-group {
-    display: flex;
-    gap: 10px;
-}
-
-#admin-panel input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    background: #0d0d0f;
-    color: white;
-    font-size: 16px;
-    text-align: center;
-}
-
-#admin-panel button {
-    background: #FFB703;
-    color: #000;
-    border: none;
-    padding: 12px 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-/* L'INTERFACE POPUP POUR LE CODE */
-#modal-overlay {
+#modal-overlay, #minijeu-overlay {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.85); /* Effet d'assombrissement en fond */
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
@@ -178,54 +141,135 @@ h1 {
     text-align: center;
     box-shadow: 0 15px 35px rgba(0,0,0,0.8);
 }
+.modal-content h3 { color: #fff; margin-bottom: 10px; }
+.modal-content p { color: #aaa; font-size: 14px; margin-bottom: 20px; }
+.modal-content input { width: 100%; padding: 15px; margin-bottom: 25px; border-radius: 10px; border: 1px solid #333; background: #121215; color: #FFB703; font-size: 20px; text-align: center; letter-spacing: 3px; outline: none; }
+.modal-actions { display: flex; justify-content: space-between; gap: 10px; }
+.modal-actions button { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; font-size: 15px; cursor: pointer; }
+.btn-annuler { background: #333; color: #fff; }
+.btn-valider { background: #FFB703; color: #000; }
 
-.modal-content h3 {
-    color: #fff;
-    margin-bottom: 10px;
+/* Mini Jeu */
+.slots-container { display: flex; justify-content: center; gap: 15px; margin: 25px 0; background: #121215; padding: 20px; border-radius: 15px; border: 2px solid #333; box-shadow: inset 0px 5px 15px rgba(0,0,0,0.8); }
+.slot { font-size: 45px; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; background: linear-gradient(145deg, #1e1e24, #18181d); border-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); border: 1px solid #FFB703; }
+#minijeu-message { color: #FFB703; font-weight: bold; font-size: 16px; margin-bottom: 25px; height: 20px; }
+
+/* Roulette Pro */
+#roulette-view { display: flex; flex-direction: column; height: 100%; animation: fadeIn 0.3s ease; overflow-y: auto; padding-bottom: 20px; }
+.roulette-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+#roulette-resultat-pro { font-size: 20px; font-weight: bold; color: #FFB703; }
+.chip-selector { display: flex; justify-content: space-between; background: #121215; padding: 10px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #333; }
+.chip { width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; cursor: pointer; background: radial-gradient(circle at 15px 15px, #444, #111); border: 3px dashed #888; color: white; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); transition: transform 0.2s; }
+.chip.active { transform: scale(1.15); border-color: #FFB703; box-shadow: 0 0 10px #FFB703; }
+.btn-clear { background: #d32f2f; color: white; border: none; border-radius: 10px; padding: 0 15px; font-weight: bold; }
+.roulette-board { background: #0f3a1c; border: 2px solid #FFB703; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 5px; }
+.board-numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.board-outside { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-top: 5px; }
+.bet-spot { position: relative; border: 1px solid rgba(255, 255, 255, 0.3); padding: 12px 0; text-align: center; font-weight: bold; font-size: 18px; cursor: pointer; border-radius: 4px; }
+.bet-spot:active { opacity: 0.7; }
+.bet-spot.red { background: #d32f2f; }
+.bet-spot.black { background: #1a1a1d; }
+.bet-spot.green { background: #2e7d32; }
+.chip-bet { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; background: #FFB703; color: #000; border-radius: 50%; font-size: 11px; font-weight: 900; line-height: 30px; text-align: center; border: 2px solid #fff; box-shadow: 2px 2px 5px rgba(0,0,0,0.8); pointer-events: none; }
+.btn-spin { margin-top: 20px; background: #FFB703; color: #000; border: none; padding: 15px; border-radius: 15px; font-size: 20px; font-weight: 900; box-shadow: 0 5px 15px rgba(255, 183, 3, 0.3); }
+
+/* Poker Betclic */
+#poker-view { display: flex; flex-direction: column; height: 100%; animation: fadeIn 0.3s ease; background: radial-gradient(circle at top, #2a2a35, #121215); }
+.poker-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.pot-container { background: rgba(0, 0, 0, 0.6); padding: 5px 15px; border-radius: 20px; border: 1px solid #333; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+.pot-label { color: #888; font-size: 12px; font-weight: bold; }
+#poker-pot { color: #FFB703; font-weight: 900; font-size: 16px; }
+.poker-table-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 10px; }
+.poker-table { width: 100%; height: 350px; background: linear-gradient(145deg, #1c2826, #121e1a); border-radius: 100px; position: relative; border: 4px solid #2a3a35; box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 10px 20px rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 20px 0; }
+.player { display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2; }
+.opponent { position: absolute; top: -30px; }
+.hero { position: absolute; bottom: -30px; }
+.avatar-box { background: #1e1e24; border-radius: 12px; padding: 5px 15px; display: flex; align-items: center; gap: 8px; border: 1px solid #333; box-shadow: 0 8px 15px rgba(0,0,0,0.6); }
+.hero-box { border-color: #ee2a24; }
+.avatar-icon { font-size: 20px; }
+.avatar-name { color: #fff; font-weight: bold; font-size: 14px; }
+.avatar-chips { color: #aaa; font-size: 12px; }
+.community-cards { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; gap: 5px; }
+.card { width: 45px; height: 65px; background: #fff; border-radius: 6px; box-shadow: 2px 5px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px; }
+.card.placeholder { background: rgba(0, 0, 0, 0.2); border: 1px dashed rgba(255, 255, 255, 0.2); box-shadow: none; }
+.cards-hand { display: flex; gap: 2px; }
+.poker-controls { display: flex; gap: 10px; margin-top: 30px; }
+.btn-poker { flex: 1; padding: 15px 5px; border: none; border-radius: 12px; font-weight: 900; font-size: 14px; text-transform: uppercase; color: white; box-shadow: 0 6px 15px rgba(0,0,0,0.4); cursor: pointer; }
+.btn-poker:active { transform: scale(0.95); }
+.btn-poker.fold { background: #333; color: #aaa; }
+.btn-poker.call { background: #444; }
+.btn-poker.raise { background: linear-gradient(to right, #ee2a24, #ff403a); }
+
+/* --- DESIGN BLACKJACK PREMIUM --- */
+#bj-view { display: flex; flex-direction: column; height: 100%; animation: fadeIn 0.4s ease; padding-bottom: 10px; }
+.btn-retour-clean { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 12px; padding: 10px 15px; display: inline-block; cursor: pointer; backdrop-filter: blur(10px); align-self: flex-start; }
+
+.bj-table-glass { flex: 1; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 25px 15px; position: relative; }
+.bj-divider { width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 20px 0; }
+.bj-area { display: flex; flex-direction: column; align-items: center; width: 100%; }
+.cards-container { display: flex; justify-content: center; gap: -40px; min-height: 110px; }
+
+/* Cartes et Animation */
+.bj-card { width: 75px; height: 110px; background: #ffffff; border-radius: 12px; box-shadow: -5px 10px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between; padding: 8px; font-weight: 700; font-size: 20px; margin-left: -35px; animation: dealCard 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; opacity: 0; }
+.bj-card:first-child { margin-left: 0; }
+.bj-card.no-anim { animation: none; opacity: 1; transform: none; } /* Empêche les anciennes cartes de re-sauter */
+.bj-card.red { color: #ff3b30; }
+.bj-card.black { color: #1c1c1e; }
+.bj-card.hidden { background: linear-gradient(135deg, #1c1c1e, #2c2c2e); border: 1px solid rgba(255,255,255,0.1); }
+.card-top { text-align: left; font-size: 16px; }
+.card-center { text-align: center; font-size: 32px; font-weight: normal; }
+.card-bottom { text-align: right; font-size: 16px; transform: rotate(180deg); }
+
+/* Scores (Fixes pour ne pas décaler l'écran) */
+.bj-score-pill { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 10px 0; backdrop-filter: blur(5px); visibility: hidden; opacity: 0; transition: opacity 0.3s; }
+.bj-score-pill.active { visibility: visible; opacity: 1; }
+.bj-score-pill.player-score { background: rgba(255, 255, 255, 0.1); }
+
+/* Zones de Mises */
+.bj-bet-zones { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 15px; }
+.bj-bet-spot-clean { width: 60px; height: 60px; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative; color: rgba(255, 255, 255, 0.3); font-size: 10px; letter-spacing: 1px; }
+.bj-bet-spot-side { width: 50px; height: 50px; border: 1px dashed rgba(255, 183, 3, 0.4); border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative; color: rgba(255, 183, 3, 0.4); font-size: 8px; font-weight: bold; text-align: center; }
+
+/* Jetons */
+.chip-stack { position: absolute; bottom: 5px; display: flex; flex-direction: column-reverse; align-items: center; }
+.chip-mini { width: 35px; height: 35px; background: rgba(255, 183, 3, 0.9); border: 2px solid #fff; border-radius: 50%; margin-top: -25px; box-shadow: 0 4px 6px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; font-size: 10px; font-weight: 900; color: #000; }
+.chip-mini:first-child { margin-top: 0; }
+.flying-chip { position: fixed; width: 45px; height: 45px; background: rgba(255, 255, 255, 0.2); border: 1px solid #fff; border-radius: 50%; z-index: 1000; pointer-events: none; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+#bj-shoe { position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; }
+
+@keyframes dealCard {
+    0% { opacity: 0; transform: translate(150px, -200px) scale(0.5) rotate(180deg); }
+    100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.modal-content p {
-    color: #aaa;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
+/* Wrapper pour figer la hauteur des boutons (Anti-Saut de l'écran) */
+.bj-controls-wrapper { min-height: 120px; display: flex; align-items: center; justify-content: center; width: 100%; margin-top: 10px; }
+.bj-controls-glass { width: 100%; display: flex; flex-direction: column; gap: 15px; }
 
-.modal-content input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    border: 1px solid #333;
-    background: #121215;
-    color: #FFB703;
-    font-size: 20px;
-    text-align: center;
-    letter-spacing: 3px;
-    outline: none;
-}
+.chip-selector-clean { display: flex; justify-content: space-between; background: rgba(255, 255, 255, 0.03); padding: 8px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05); }
+.chip-clean { width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 14px; cursor: pointer; color: #888; transition: all 0.3s ease; }
+.chip-clean.active { background: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.btn-glass-main { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.btn-glass-main:active { background: rgba(255, 255, 255, 0.2); }
+.btn-glass-main:disabled { opacity: 0.3; cursor: not-allowed; }
 
-.modal-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
+#bj-play-controls { flex-direction: row; gap: 10px; }
+.btn-glass-action { flex: 1; padding: 16px 0; border-radius: 16px; border: none; font-weight: 600; font-size: 15px; color: white; cursor: pointer; backdrop-filter: blur(10px); }
+.btn-glass-action.hit { background: rgba(48, 209, 88, 0.2); border: 1px solid rgba(48, 209, 88, 0.4); color: #30d158; }
+.btn-glass-action.stand { background: rgba(255, 69, 58, 0.2); border: 1px solid rgba(255, 69, 58, 0.4); color: #ff453a; }
+.btn-glass-action.double { background: rgba(10, 132, 255, 0.2); border: 1px solid rgba(10, 132, 255, 0.4); color: #0a84ff; }
+.btn-glass-action:disabled { opacity: 0.3; }
 
-.modal-actions button {
-    flex: 1;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-}
+/* Overlays (Centrés parfaitement sur l'écran global) */
+#bj-insurance-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(15px); border: 1px solid #FFB703; padding: 20px; border-radius: 16px; text-align: center; z-index: 50; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+#bj-insurance-overlay h4 { color: #FFB703; font-size: 20px; margin-bottom: 5px; }
+#bj-insurance-overlay p { color: #ccc; font-size: 12px; margin-bottom: 15px; }
+.insurance-actions { display: flex; gap: 10px; }
 
-.btn-annuler {
-    background: #333;
-    color: #fff;
-}
-
-.btn-valider {
-    background: #FFB703;
-    color: #000;
-}
+#bj-message-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
+.bj-message-glass { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 40px; border-radius: 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); width: 80%; }
+#bj-message-text { font-size: 24px; font-weight: 700; margin-bottom: 25px; }

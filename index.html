@@ -15,7 +15,10 @@
         <header id="en-tete-principal">
             <div class="top-bar">
                 <h1>MPC</h1>
-                <button id="btn-code" onclick="ouvrirModalCode()">CODE</button>
+                <div style="display:flex; gap:10px;">
+                    <button id="btn-stats" onclick="ouvrirStats()">📊 STATS</button>
+                    <button id="btn-code" onclick="ouvrirModalCode()">CODE</button>
+                </div>
             </div>
             
             <div id="solde-container" onclick="lancerMiniJeu()">
@@ -77,38 +80,38 @@
             </div>
         </main>
 
-        <!-- JEU : BLACKJACK (Premium Glassmorphism & Fixe) -->
+        <!-- JEU : BLACKJACK (Premium & Fixe) -->
         <main id="bj-view" style="display: none; position: relative;">
             <button class="btn-retour-clean" onclick="fermerBlackjack()" style="margin-bottom: 15px;">⬅ Retour</button>
             
             <!-- Table de Blackjack -->
             <div class="bj-table-glass">
-                <!-- Sabot (Deck visuel pour l'animation) -->
                 <div id="bj-shoe"></div>
 
                 <!-- Croupier -->
                 <div class="bj-area">
                     <div class="cards-container" id="dealer-cards"></div>
-                    <!-- Bulle de score qui garde sa place même invisible -->
                     <div class="bj-score-pill" id="dealer-score-box"><span id="dealer-score">0</span></div>
                 </div>
 
                 <div class="bj-divider"></div>
 
                 <!-- Joueur -->
-                <div class="bj-area">
-                    <div class="bj-score-pill player-score" id="player-score-box"><span id="player-score">0</span></div>
-                    <div class="cards-container" id="player-cards"></div>
+                <div class="bj-area" style="position: relative;">
+                    <!-- Wrapper pour supporter plusieurs mains (Split) -->
+                    <div id="bj-player-hands-wrapper" style="display: flex; gap: 15px; justify-content: center; width: 100%;">
+                        <div class="bj-hand-column" id="bj-hand-0">
+                            <div class="bj-score-pill player-score" id="player-score-box-0"><span id="player-score-0">0</span></div>
+                            <div class="cards-container" id="player-cards-0"></div>
+                        </div>
+                    </div>
                     
                     <!-- Zones de Mise -->
-                    <div class="bj-bet-zones">
-                        <!-- Lucky Ladies -->
+                    <div class="bj-bet-zones" id="bj-bet-zones">
                         <div class="bj-bet-spot-side" id="bj-ll-spot" onclick="placerMiseBj('ll')">
                             <span>L. LADIES</span>
                             <div class="chip-stack" id="bj-ll-chips"></div>
                         </div>
-                        
-                        <!-- Mise Principale -->
                         <div class="bj-bet-spot-clean" id="bj-main-spot" onclick="placerMiseBj('main')">
                             <span>MISE</span>
                             <div class="chip-stack" id="bj-main-chips"></div>
@@ -132,7 +135,7 @@
                 <button class="btn-glass-action stand" id="btn-clear-bets" onclick="retirerMisesBj()" style="visibility: hidden; width: auto; padding: 8px 20px; font-size: 14px;">Retirer les mises</button>
             </div>
 
-            <!-- Conteneur fixe pour les contrôles pour éviter les sauts -->
+            <!-- Contrôles Blackjack -->
             <div class="bj-controls-wrapper">
                 <div id="bj-bet-controls" class="bj-controls-glass">
                     <div class="chip-selector-clean" id="bj-chip-selector">
@@ -145,9 +148,14 @@
                 </div>
 
                 <div id="bj-play-controls" class="bj-controls-glass" style="display: none;">
-                    <button class="btn-glass-action hit" onclick="tirerCarteBj()">Tirer</button>
-                    <button class="btn-glass-action stand" onclick="resterBj()">Rester</button>
-                    <button class="btn-glass-action double" id="btn-double" onclick="doublerBj()">x2</button>
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <button class="btn-glass-action hit" onclick="tirerCarteBj()">Tirer</button>
+                        <button class="btn-glass-action stand" onclick="resterBj()">Rester</button>
+                    </div>
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <button class="btn-glass-action double" id="btn-double" onclick="doublerBj()">Doubler</button>
+                        <button class="btn-glass-action split" id="btn-split" onclick="separerBj()" style="display: none; background: rgba(142, 68, 173, 0.2); border: 1px solid rgba(142, 68, 173, 0.4); color: #c0392b;">Séparer</button>
+                    </div>
                 </div>
             </div>
 
@@ -166,7 +174,7 @@
                 <button class="btn-retour" onclick="fermerRoulette()">⬅ Retour</button>
                 <div id="roulette-resultat-pro">Faites vos jeux !</div>
             </div>
-
+            <!-- ... (Garde ton code existant pour la roulette ici) ... -->
             <div class="chip-selector">
                 <div class="chip active" id="chip-10" onclick="choisirJeton(10)">10</div>
                 <div class="chip" id="chip-50" onclick="choisirJeton(50)">50</div>
@@ -174,7 +182,6 @@
                 <div class="chip" id="chip-500" onclick="choisirJeton(500)">500</div>
                 <button class="btn-clear" onclick="annulerParis()">Annuler</button>
             </div>
-
             <div class="roulette-board">
                 <div class="bet-spot green zero" onclick="placerPari('0')">0<span class="chip-bet" id="bet-0"></span></div>
                 <div class="board-numbers" id="board-numbers"></div>
@@ -187,9 +194,34 @@
                     <div class="bet-spot" onclick="placerPari('19-36')">19-36<span class="chip-bet" id="bet-19-36"></span></div>
                 </div>
             </div>
-
             <button class="btn-spin" id="btn-lancer-roulette" onclick="lancerRoulettePro()">TOURNER LA ROUE</button>
         </main>
+
+        <!-- PANNEAUX ET MODALS SYSTEMES -->
+        
+        <!-- Alerte Custom (Remplace alert()) -->
+        <div id="custom-alert-overlay" style="display: none;">
+            <div class="custom-alert-box">
+                <h3 id="custom-alert-text">Message</h3>
+                <button class="btn-glass-main" onclick="fermerAlerte()" style="padding: 10px; width: 100%;">OK</button>
+            </div>
+        </div>
+
+        <!-- Panneau Statistiques -->
+        <div id="stats-overlay" style="display: none;">
+            <div class="modal-content" style="text-align: left;">
+                <h3 style="text-align: center; color: #FFB703;">📊 Tes Statistiques</h3>
+                <div class="stats-grid">
+                    <div class="stat-item"><span>Parties Jouées:</span> <b id="stat-parties">0</b></div>
+                    <div class="stat-item"><span>Total Misé:</span> <b id="stat-mises">0 €</b></div>
+                    <div class="stat-item"><span>Total Gagné:</span> <b id="stat-gains" style="color: #30d158;">0 €</b></div>
+                    <div class="stat-item" style="border-top: 1px solid #333; padding-top: 10px;">
+                        <span>Bénéfice Net:</span> <b id="stat-pnl">0 €</b>
+                    </div>
+                </div>
+                <button class="btn-annuler" style="width: 100%; margin-top: 20px;" onclick="fermerStats()">Fermer</button>
+            </div>
+        </div>
 
         <!-- Panneau Admin -->
         <div id="admin-panel" style="display: none;">
